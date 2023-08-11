@@ -3,8 +3,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="SpringServiceImpl" class="co.zhanglintc.service.impl.SpringServiceImpl">
-        <property name="name" value="name in bean"/>
-    </bean>
-
+    <!-- 想使用通配符的话，必须放到一个文件夹下比如subBeans之下，很奇怪…… -->
+    <import resource="classpath:subBeans/*.xml"/>
 </beans>

@@ -34,7 +34,7 @@ public class AppTest {
     @Before
     public void setUp() {
         System.out.println("setUp..");
-        ctx = new ClassPathXmlApplicationContext(beanConfig);
+        // ctx = new ClassPathXmlApplicationContext(beanConfig);
     }
 
     @After
@@ -52,6 +52,7 @@ public class AppTest {
     public void test01() {
         SpringService ss = (SpringServiceImpl) ctx.getBean("SpringServiceImpl");
         ss.doSome();
+        System.out.println(ss);
     }
 
     @Test
@@ -75,5 +76,13 @@ public class AppTest {
         SpringServiceImpl ssi = ctx.getBean(SpringServiceImpl.class);
         String name = ssi.getName();
         System.out.println(name);
+    }
+
+    @Test
+    public void test05() {
+        SpringService ss1 = (SpringServiceImpl) ctx.getBean("SpringServiceImpl");
+        SpringService ss2 = ctx.getBean(SpringServiceImpl.class);
+        System.out.println(ss1);
+        System.out.println(ss2);
     }
 }
