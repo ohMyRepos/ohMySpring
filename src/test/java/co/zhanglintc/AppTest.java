@@ -1,5 +1,6 @@
 package co.zhanglintc;
 
+import co.zhanglintc.anotherService.City;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -64,10 +65,10 @@ public class AppTest {
     @Test
     public void test03() {
         int numbs = ctx.getBeanDefinitionCount();
-        System.out.println(numbs);
+        System.out.println(String.format("%s beans here", numbs));
         String[] names = ctx.getBeanDefinitionNames();
         for (String name : names) {
-            System.out.println(name);
+            System.out.println(String.format("bean name: %s", name));
         }
     }
 
@@ -84,5 +85,11 @@ public class AppTest {
         SpringService ss2 = ctx.getBean(SpringServiceImpl.class);
         System.out.println(ss1);
         System.out.println(ss2);
+    }
+
+    @Test
+    public void test06() {
+        City city = ctx.getBean(City.class);
+        System.out.println(String.format("City.name: %s", city.getName()));
     }
 }
