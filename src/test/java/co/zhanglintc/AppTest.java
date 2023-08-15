@@ -1,17 +1,12 @@
 package co.zhanglintc;
 
 import co.zhanglintc.anotherService.City;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+import co.zhanglintc.anotherService.Person;
 import co.zhanglintc.service.SpringService;
 import co.zhanglintc.service.impl.SpringServiceImpl;
+import org.junit.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Unit test for simple App.
@@ -90,6 +85,10 @@ public class AppTest {
     @Test
     public void test06() {
         City city = ctx.getBean(City.class);
+        Person person = ctx.getBean(Person.class);
         System.out.println(String.format("City.name: %s", city.getName()));
+        System.out.println(String.format("City.school: %s", city.getSchool()));
+        System.out.println(String.format("City.subSchool: %s", city.getSubSchool()));
+        System.out.println(String.format("Person.city: %s", person.getCity().getName()));
     }
 }

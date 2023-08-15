@@ -4,7 +4,7 @@ public class School {
     private String name;
 
     School() {
-        name = "Peking University";
+        name = "北京大学";
     }
 
     public String getName() {
