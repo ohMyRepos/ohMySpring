@@ -2,6 +2,7 @@ package co.zhanglintc;
 
 import co.zhanglintc.anotherService.City;
 import co.zhanglintc.anotherService.Person;
+import co.zhanglintc.service.AOPService;
 import co.zhanglintc.service.SpringService;
 import co.zhanglintc.service.impl.SpringServiceImpl;
 import org.junit.*;
@@ -90,5 +91,12 @@ public class AppTest {
         System.out.println(String.format("City.school: %s", city.getSchool()));
         System.out.println(String.format("City.subSchool: %s", city.getSubSchool()));
         System.out.println(String.format("Person.city: %s", person.getCity().getName()));
+    }
+
+    @Test
+    public void test07() {
+        AOPService as = ctx.getBean(AOPService.class);
+        System.out.printf("Wrapped type: '%s'\n", as.getClass());
+        as.doSome();
     }
 }
