@@ -104,5 +104,6 @@ public class AppTest {
         Truck truck = ctx.getBean(Truck.class);
         System.out.printf("Wrapped type is Enhancer: '%s'\n", truck.getClass());
         truck.sayHello();
+        System.out.printf("return value in UnitTest %s\n", truck.getSize());
     }
 }
