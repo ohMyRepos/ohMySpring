@@ -2,8 +2,10 @@ package co.zhanglintc;
 
 import co.zhanglintc.anotherService.City;
 import co.zhanglintc.anotherService.Person;
+import co.zhanglintc.aop.Truck;
 import co.zhanglintc.service.AOPService;
 import co.zhanglintc.service.SpringService;
+import co.zhanglintc.service.impl.AOPServiceImpl;
 import co.zhanglintc.service.impl.SpringServiceImpl;
 import org.junit.*;
 import org.springframework.context.ApplicationContext;
@@ -96,7 +98,11 @@ public class AppTest {
     @Test
     public void test07() {
         AOPService as = ctx.getBean(AOPService.class);
-        System.out.printf("Wrapped type: '%s'\n", as.getClass());
+        System.out.printf("Wrapped type is Proxy: '%s'\n", as.getClass());
         as.doSome();
+
+        Truck truck = ctx.getBean(Truck.class);
+        System.out.printf("Wrapped type is Enhancer: '%s'\n", truck.getClass());
+        truck.sayHello();
     }
 }

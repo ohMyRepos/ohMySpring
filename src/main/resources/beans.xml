@@ -20,7 +20,8 @@
   <context:component-scan base-package="co.zhanglintc.anotherService"/>
   <context:property-placeholder location="classpath:beans.properties"/>
 
-  <bean id="AOPService" class="co.zhanglintc.service.AOPService"/>
+  <bean id="Truck" class="co.zhanglintc.aop.Truck"/>
+  <bean id="AOPService" class="co.zhanglintc.service.impl.AOPServiceImpl"/>
   <bean id="Proxy" class="co.zhanglintc.aop.Proxy"/>
   <aop:aspectj-autoproxy/>
 </beans>
