@@ -5,9 +5,9 @@ import co.zhanglintc.anotherService.Person;
 import co.zhanglintc.aop.Truck;
 import co.zhanglintc.service.AOPService;
 import co.zhanglintc.service.SpringService;
-import co.zhanglintc.service.impl.AOPServiceImpl;
 import co.zhanglintc.service.impl.SpringServiceImpl;
 import org.junit.*;
+import org.junit.rules.ExpectedException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -105,5 +105,23 @@ public class AppTest {
         System.out.printf("Wrapped type is Enhancer: '%s'\n", truck.getClass());
         truck.sayHello();
         System.out.printf("return value in UnitTest %s\n", truck.getSize());
+    }
+
+    @Test
+    public void test08() {
+        Truck truck = ctx.getBean(Truck.class);
+        System.out.printf("final name: %s\n", truck.getTruckName());
+    }
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void test09() {
+        Truck truck = ctx.getBean(Truck.class);
+        System.out.printf("message from letBroke: %s\n", truck.letBroke(false));
+
+        thrown.expect(RuntimeException.class);
+        truck.letBroke(true);
     }
 }
