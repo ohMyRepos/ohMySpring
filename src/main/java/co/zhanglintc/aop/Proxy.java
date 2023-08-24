@@ -56,4 +56,9 @@ public class Proxy {
         System.out.printf("afterThrowing func name: %s\n", jp.getSignature().getName());
         System.out.printf("ex message in AfterThrowing: %s\n", ex.getMessage());
     }
+
+    @After(value = "execution(* co.zhanglintc.aop.Truck.letBroke(..))")
+    public void alwaysAfterTruck(JoinPoint jp) {
+        System.out.printf("alwaysAfterTruck func name: %s\n", jp.getSignature().getName());
+    }
 }
