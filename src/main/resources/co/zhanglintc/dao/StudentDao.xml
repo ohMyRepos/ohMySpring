@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="co.zhanglintc.dao.StudentDao">
+  <insert id="insertStudent" useGeneratedKeys="true" keyProperty="id">
+    insert into Student(name, age) values(#{name}, #{age});
+  </insert>
+
+  <delete id="deleteStudentById">
+    delete from Student where id = #{id};
+  </delete>
+  
+  <select id="selectStudents" resultType="Student">
+    select id, name, age from Student;
+  </select>
+</mapper>

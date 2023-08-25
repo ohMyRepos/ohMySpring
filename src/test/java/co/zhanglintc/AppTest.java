@@ -3,13 +3,21 @@ package co.zhanglintc;
 import co.zhanglintc.anotherService.City;
 import co.zhanglintc.anotherService.Person;
 import co.zhanglintc.aop.Truck;
+import co.zhanglintc.dao.StudentDao;
+import co.zhanglintc.pojo.Student;
 import co.zhanglintc.service.AOPService;
 import co.zhanglintc.service.SpringService;
 import co.zhanglintc.service.impl.SpringServiceImpl;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Unit test for simple App.
@@ -123,5 +131,51 @@ public class AppTest {
 
         thrown.expect(RuntimeException.class);
         truck.letBroke(true);
+    }
+
+    @Test
+    public void test10() {
+        String myBatisConfig = "myBatis.xml";
+        InputStream is = getClass().getClassLoader().getResourceAsStream(myBatisConfig);
+        SqlSessionFactory ssFactory = new SqlSessionFactoryBuilder().build(is);
+
+        SqlSession session = ssFactory.openSession();
+        List<Student> students = session.selectList("co.zhanglintc.dao.StudentDao.selectStudents");
+        System.out.printf("session.selectList: %s\n", students);
+
+        StudentDao mapper = session.getMapper(StudentDao.class);
+        students = mapper.selectStudents();
+        System.out.printf("mapper.selectStudents: %s\n", students);
+
+        session.close();
+    }
+
+    @Test
+    public void test11() {
+        String myBatisConfig = "myBatis.xml";
+        InputStream is = getClass().getClassLoader().getResourceAsStream(myBatisConfig);
+        SqlSessionFactory ssFactory = new SqlSessionFactoryBuilder().build(is);
+
+        SqlSession session = ssFactory.openSession(false);
+        StudentDao mapper = session.getMapper(StudentDao.class);
+        List<Student> students = mapper.selectStudents();
+        System.out.printf("students before: %s\n", students);
+
+        Student sam = new Student();
+        sam.setName("sam");
+        sam.setAge(22);
+
+        mapper.insertStudent(sam);
+        int id = sam.getId();
+        System.out.printf("id: %s\n", id);
+        students = mapper.selectStudents();
+        System.out.printf("students inserted: %s\n", students);
+
+        mapper.deleteStudentById(id);
+        students = mapper.selectStudents();
+        System.out.printf("students deleted: %s\n", students);
+
+        session.commit();
+        session.close();
     }
 }

@@ -52,15 +52,20 @@ public class Proxy {
     }
 
     @Pointcut(value = "execution(* co.zhanglintc.aop.Truck.letBroke(..))")
-    private void truckLetBrok() {}
+    private void truckLetBroke() {}
 
-    @AfterThrowing(value = "truckLetBrok()", throwing = "ex")
+    @AfterThrowing(value = "truckLetBroke()", throwing = "ex")
     public void afterThrowing(JoinPoint jp, Exception ex) {
         System.out.printf("afterThrowing func name: %s\n", jp.getSignature().getName());
         System.out.printf("ex message in AfterThrowing: %s\n", ex.getMessage());
     }
 
-    @After(value = "truckLetBrok()")
+    @Before(value = "truckLetBroke()")
+    public void alwaysBeforeTruck(JoinPoint jp) {
+        System.out.printf("alwaysBeforeTruck func name: %s\n", jp.getSignature().getName());
+    }
+
+    @After(value = "truckLetBroke()")
     public void alwaysAfterTruck(JoinPoint jp) {
         System.out.printf("alwaysAfterTruck func name: %s\n", jp.getSignature().getName());
     }
