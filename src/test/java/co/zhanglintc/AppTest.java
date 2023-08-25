@@ -156,8 +156,8 @@ public class AppTest {
         InputStream is = getClass().getClassLoader().getResourceAsStream(myBatisConfig);
         SqlSessionFactory ssFactory = new SqlSessionFactoryBuilder().build(is);
 
-        SqlSession session = ssFactory.openSession(false);
-        StudentDao mapper = session.getMapper(StudentDao.class);
+        SqlSession sqlSession = ssFactory.openSession(false);
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
         List<Student> students = mapper.selectStudents();
         System.out.printf("students before: %s\n", students);
 
@@ -175,7 +175,16 @@ public class AppTest {
         students = mapper.selectStudents();
         System.out.printf("students deleted: %s\n", students);
 
-        session.commit();
-        session.close();
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void test12() {
+        SqlSessionFactory ssFactory = ctx.getBean(SqlSessionFactory.class);
+        SqlSession sqlSession = ssFactory.openSession();
+        // StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+        // List<Student> students = mapper.selectStudents();
+        // System.out.printf("students before: %s\n", students);
     }
 }

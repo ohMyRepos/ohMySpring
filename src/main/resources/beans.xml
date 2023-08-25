@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans
-  xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:aop="http://www.springframework.org/schema/aop"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/aop
@@ -16,6 +16,7 @@
 
   <!-- 想使用通配符的话，必须放到一个文件夹下比如subBeans之下，很奇怪…… -->
   <import resource="classpath:subBeans/*.xml"/>
+  <import resource="classpath:beanFiles/myBatisBean.xml"/>
 
   <context:component-scan base-package="co.zhanglintc.anotherService"/>
   <context:property-placeholder location="classpath:beans.properties"/>
