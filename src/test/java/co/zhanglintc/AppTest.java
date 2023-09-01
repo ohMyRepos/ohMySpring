@@ -4,6 +4,7 @@ import co.zhanglintc.anotherService.City;
 import co.zhanglintc.anotherService.Person;
 import co.zhanglintc.aop.Truck;
 import co.zhanglintc.dao.StudentDao;
+import co.zhanglintc.dao.impl.StudentDaoImpl;
 import co.zhanglintc.pojo.Student;
 import co.zhanglintc.service.AOPService;
 import co.zhanglintc.service.SpringService;
@@ -74,7 +75,7 @@ public class AppTest {
         System.out.println(String.format("%s beans here", numbs));
         String[] names = ctx.getBeanDefinitionNames();
         for (String name : names) {
-            System.out.println(String.format("bean name: %s", name));
+            System.out.println(String.format("bean name: %s, type: %s", name, ctx.getBean(name)));
         }
     }
 
@@ -135,7 +136,7 @@ public class AppTest {
 
     @Test
     public void test10() {
-        String myBatisConfig = "myBatis.xml";
+        String myBatisConfig = "myBatisConfig.xml";
         InputStream is = getClass().getClassLoader().getResourceAsStream(myBatisConfig);
         SqlSessionFactory ssFactory = new SqlSessionFactoryBuilder().build(is);
 
@@ -152,7 +153,7 @@ public class AppTest {
 
     @Test
     public void test11() {
-        String myBatisConfig = "myBatis.xml";
+        String myBatisConfig = "myBatisConfig.xml";
         InputStream is = getClass().getClassLoader().getResourceAsStream(myBatisConfig);
         SqlSessionFactory ssFactory = new SqlSessionFactoryBuilder().build(is);
 
@@ -183,8 +184,31 @@ public class AppTest {
     public void test12() {
         SqlSessionFactory ssFactory = ctx.getBean(SqlSessionFactory.class);
         SqlSession sqlSession = ssFactory.openSession();
-        // StudentDao mapper = sqlSession.getMapper(StudentDao.class);
-        // List<Student> students = mapper.selectStudents();
-        // System.out.printf("students before: %s\n", students);
+        StudentDao mapper = sqlSession.getMapper(StudentDao.class);
+        List<Student> students = mapper.selectStudents();
+        System.out.printf("students use mapper: %s\n", students);
+        sqlSession.commit();
+        sqlSession.close();
+
+        Student sam = new Student();
+        sam.setName("sam");
+        sam.setAge(22);
+
+        StudentDao sd = (StudentDao) ctx.getBean("studentDao");
+        sd.insertStudent(sam);
+        int id = sam.getId();
+        students = sd.selectStudents();
+        System.out.printf("students use dao inserted: %s\n", students);
+        sd.deleteStudentById(id);
+        students = sd.selectStudents();
+        System.out.printf("students use dao deleted: %s\n", students);
+
+        StudentDaoImpl sdi = ctx.getBean(StudentDaoImpl.class);
+        id = sdi.insertStudent(sam);
+        students = sdi.selectStudents();
+        System.out.printf("students use impl inserted: %s\n", students);
+        sd.deleteStudentById(id);
+        students = sdi.selectStudents();
+        System.out.printf("students use impl deleted: %s\n", students);
     }
 }

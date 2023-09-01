@@ -12,5 +12,15 @@
 
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource"/>
+    <property name="configLocation" value="classpath:myBatisConfig.xml"/>
+  </bean>
+
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    <property name="basePackage" value="co.zhanglintc.dao"/>
+  </bean>
+
+  <bean id="studentDaoImpl" class="co.zhanglintc.dao.impl.StudentDaoImpl">
+    <property name="sd" ref="studentDao"/>
   </bean>
 </beans>

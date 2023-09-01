@@ -16,8 +16,11 @@
 
   <!-- 想使用通配符的话，必须放到一个文件夹下比如subBeans之下，很奇怪…… -->
   <import resource="classpath:subBeans/*.xml"/>
+
+  <!-- Mybatis的Spring配置文件 -->
   <import resource="classpath:beanFiles/myBatisBean.xml"/>
 
+  <!-- 扫描注释和读取properties中的值用来替换占位符 -->
   <context:component-scan base-package="co.zhanglintc.anotherService"/>
   <context:property-placeholder location="classpath:beans.properties"/>
 
