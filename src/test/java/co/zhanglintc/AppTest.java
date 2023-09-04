@@ -8,7 +8,9 @@ import co.zhanglintc.dao.impl.StudentDaoImpl;
 import co.zhanglintc.pojo.Student;
 import co.zhanglintc.service.AOPService;
 import co.zhanglintc.service.SpringService;
+import co.zhanglintc.service.TxService;
 import co.zhanglintc.service.impl.SpringServiceImpl;
+import co.zhanglintc.service.impl.TxServiceImpl;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -210,5 +212,23 @@ public class AppTest {
         sd.deleteStudentById(id);
         students = sdi.selectStudents();
         System.out.printf("students use impl deleted: %s\n", students);
+    }
+
+    @Test
+    public void test13() {
+        TxService ts = ctx.getBean(TxService.class);
+        System.out.println(ts.getClass().getName());
+        ts.doSome(false);
+        thrown.expect(RuntimeException.class);
+        ts.doSome(true);
+    }
+
+    @Test
+    public void test14() {
+        TxService ts = ctx.getBean(TxService.class);
+        System.out.println(ts.getClass().getName());
+        ts.doAnother(false);
+        thrown.expect(RuntimeException.class);
+        ts.doAnother(true);
     }
 }

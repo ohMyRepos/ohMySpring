@@ -4,6 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:aop="http://www.springframework.org/schema/aop"
         xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:tx="http://www.springframework.org/schema/tx"
         xsi:schemaLocation="
     http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -11,6 +12,8 @@
     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
   "
 >
 
@@ -19,6 +22,18 @@
 
   <!-- Mybatis的Spring配置文件 -->
   <import resource="classpath:beanFiles/myBatisBean.xml"/>
+  <!-- 事务驱动管理器 -->
+  <tx:annotation-driven transaction-manager="txManager"/>
+  <!-- 声明式事务管理器 -->
+  <tx:advice id="txAdvice" transaction-manager="txManager">
+    <tx:attributes>
+      <tx:method name="doAnother"/>
+    </tx:attributes>
+  </tx:advice>
+  <aop:config>
+    <aop:pointcut id="aopAdvice" expression="execution(* co.zhanglintc.service.TxService.*(..))"/>
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="aopAdvice"/>
+  </aop:config>
 
   <!-- 扫描注释和读取properties中的值用来替换占位符 -->
   <context:component-scan base-package="co.zhanglintc.anotherService"/>
@@ -27,5 +42,6 @@
   <bean id="Truck" class="co.zhanglintc.aop.Truck"/>
   <bean id="AOPService" class="co.zhanglintc.service.impl.AOPServiceImpl"/>
   <bean id="Proxy" class="co.zhanglintc.aop.Proxy"/>
+  <!-- AOP驱动管理器 -->
   <aop:aspectj-autoproxy/>
 </beans>

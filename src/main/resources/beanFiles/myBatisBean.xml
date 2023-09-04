@@ -17,7 +17,12 @@
 
   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
     <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    <!-- 将目录下的dao全部扫描进入Spring中 -->
     <property name="basePackage" value="co.zhanglintc.dao"/>
+  </bean>
+
+  <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
   </bean>
 
   <bean id="studentDaoImpl" class="co.zhanglintc.dao.impl.StudentDaoImpl">

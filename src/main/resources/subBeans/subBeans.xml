@@ -7,6 +7,10 @@
         <property name="name" value="name in bean"/>
     </bean>
 
+    <bean id="TxServiceImpl" class="co.zhanglintc.service.impl.TxServiceImpl">
+        <property name="studentDao" ref="studentDaoImpl"/>
+    </bean>
+
     <bean id="School" class="co.zhanglintc.anotherService.School">
     </bean>
 
